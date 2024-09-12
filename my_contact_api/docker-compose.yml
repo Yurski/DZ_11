@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: contactdb
+      POSTGRES_USER: contactuser
+      POSTGRES_PASSWORD: contactpassword
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://contactuser:contactpassword@db/contactdb
+    ports:
+      - "8000:8000"
